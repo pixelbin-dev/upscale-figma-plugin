@@ -1,0 +1,1 @@
+# upscale-figma-plugin
