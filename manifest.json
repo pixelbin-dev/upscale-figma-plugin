@@ -1,0 +1,31 @@
+{
+	"name": "Upscale.media",
+	"id": "123",
+	"api": "1.0.0",
+	"editorType": ["figma"],
+	"main": "dist/plugin/index.js",
+	"ui": "dist/ui/index.html",
+	"menu": [
+		{
+			"name": "Run",
+			"command": "ui-command"
+		},
+		{
+			"name": "Set/Reset Token",
+			"command": "token-reset-command"
+		},
+		{
+			"name": "How it works",
+			"command": "how-it-works-command"
+		}
+	],
+	"networkAccess": {
+		"allowedDomains": [
+			"https://console.pixelbin.io",
+			"https://pixebin.io",
+			"https://api.pixelbin.io",
+			"https://rsms.me",
+			"https://cdn.pixelbin.io"
+		]
+	}
+}
