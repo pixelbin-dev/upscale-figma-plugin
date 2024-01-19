@@ -171,6 +171,8 @@ figma.ui.onmessage = async (msg) => {
 						token,
 						savedCloudName,
 						orgId,
+						imgHeight: node.height,
+						imgWidth: node.width,
 					});
 				}
 			} else {
@@ -183,21 +185,43 @@ figma.ui.onmessage = async (msg) => {
 		figma.openExternal(msg.url);
 	}
 	if (msg.type === REPLACE_IMAGE) {
+		console.log("IMAge URl,", msg.transformedImageURl);
 		figma
-			.createImageAsync(msg?.bgRemovedUrl)
-			.then(async (image: Image) => {
+			.createImageAsync(msg?.transformedImageURl)
+			.then(async (image: any) => {
+				// console.log("Image Width", image.width, image.height);
+
+				// Resize the node based on the image dimensions
+
 				node.fills = [
 					{
 						type: IMAGE,
 						imageHash: image.hash,
-						scaleMode: "FIT",
+						scaleMode: "FILL",
 					},
 				];
 				toggleLoader(false);
-				figma.notify("Transformation Applied ", { timeout: 5000 });
+				figma.notify(
+					"Transformation Applied (Use ctrl/command + z/y to undo or redo results.)",
+					{ timeout: 5000 }
+				);
 			})
 			.catch((err) => {
-				figma.notify(err);
+				switch (err) {
+					case "Unable to fetch image. Response status: 403":
+						figma.notify("This image can't be enhanced any more");
+						break;
+					case "Image is too large":
+						figma.notify(
+							`Figma is not able to handle result. You can find your result at : ${msg?.transformedImageURl}`,
+							{ timeout: Infinity }
+						);
+						break;
+					default:
+						figma.notify("Something went wrong");
+						break;
+				}
+
 				toggleLoader(false);
 			});
 	} else if (msg.type === CLOSE_PLUGIN) figma.closePlugin();

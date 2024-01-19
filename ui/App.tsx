@@ -104,6 +104,8 @@ function App() {
 			});
 
 			const superResolution = transformations.SuperResolution;
+			const Basic = transformations.Basic;
+
 			let name = `${data?.pluginMessage?.imageName}${uuidv4()}`;
 
 			res = await defaultPixelBinClient.assets.createSignedUrlV2({
@@ -125,7 +127,7 @@ function App() {
 							{
 								pluginMessage: {
 									type: REPLACE_IMAGE,
-									bgRemovedUrl: demoImage.getUrl(),
+									transformedImageURl: demoImage.getUrl(),
 								},
 							},
 							"*"
