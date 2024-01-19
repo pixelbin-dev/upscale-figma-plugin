@@ -371,7 +371,11 @@ function App() {
 							orgId={orgId}
 						/>
 					</div>
-					<Footer handleReset={handleReset} handleSubmit={handleSubmit} />
+					<Footer
+						handleReset={handleReset}
+						handleSubmit={handleSubmit}
+						isBtnDisabled={totalCredit === 0 || creditsUsed >= totalCredit}
+					/>
 				</div>
 			) : (
 				<TokenUI

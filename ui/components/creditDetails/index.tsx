@@ -52,6 +52,11 @@ function CreditsUI({ creditUSed, totalCredit, orgId }: creditsProps) {
 				Credits : {abbreviateNumber(creditUSed)}/{abbreviateNumber(totalCredit)}{" "}
 				used
 			</div>
+			{(totalCredit === 0 || creditUSed >= totalCredit) && (
+				<div className="token-err" style={{ padding: 0 }}>
+					out of credits
+				</div>
+			)}
 			<div
 				onClick={() => {
 					handleLinkClick(

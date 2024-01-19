@@ -4,9 +4,10 @@ import "../../styles/style.scss";
 interface footerProps {
 	handleReset: any;
 	handleSubmit: any;
+	isBtnDisabled: boolean;
 }
 
-function Footer({ handleReset, handleSubmit }: footerProps) {
+function Footer({ handleReset, handleSubmit, isBtnDisabled }: footerProps) {
 	return (
 		<div className="bottom-btn-container">
 			<div className="reset-container" id="reset" onClick={handleReset}>
@@ -17,6 +18,7 @@ function Footer({ handleReset, handleSubmit }: footerProps) {
 				id="submit-btn"
 				onClick={handleSubmit}
 				className="button button--primary"
+				disabled={isBtnDisabled}
 			>
 				Apply
 			</button>
