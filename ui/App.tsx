@@ -103,6 +103,10 @@ function App() {
 				zone: "default", // optional
 			});
 
+			const originalHeight = data.pluginMessage.imgHeight,
+				originalWidth = data.pluginMessage.imgWidth,
+				ratio = originalHeight / originalWidth;
+
 			const superResolution = transformations.SuperResolution;
 			const Basic = transformations.Basic;
 
@@ -121,8 +125,118 @@ function App() {
 						);
 
 						const demoImage = pixelbin.image(url?.fileId);
-						console.log("formData", formValues);
-						demoImage.setTransformation(superResolution.upscale(formValues));
+
+						function upscaleWithResize(height, width) {
+							const t1 = Basic.resize({
+								height: height,
+								width: width,
+								fit: "cover",
+								background: "000000",
+								position: "center",
+								algorithm: "lanczos3",
+								dpr: 1,
+							});
+							demoImage.setTransformation(
+								superResolution.upscale(formValues).pipe(t1)
+							);
+						}
+
+						if (formValues.type === "2x") {
+							// ********************************************* //
+							if (originalHeight > 2000 || originalWidth > 2000) {
+								let newHeight, newWidth;
+								// h > w
+								if (originalHeight > 2000 || originalWidth <= 2000) {
+									newHeight = 2000;
+									newWidth = Math.round(
+										(2000 * originalWidth) / originalHeight
+									);
+								}
+								// w > h
+								if (originalHeight <= 2000 || originalWidth > 2000) {
+									newWidth = 2000;
+									newHeight = Math.round(
+										(2000 * originalHeight) / originalWidth
+									);
+								}
+								// both greater than 2000
+								else {
+									if (originalHeight > originalWidth) {
+										newHeight = 2000;
+										newWidth = Math.round(
+											(2000 * originalWidth) / originalHeight
+										);
+									} else if (originalWidth > originalHeight) {
+										newWidth = 2000;
+										newHeight = newHeight = Math.round(
+											(2000 * originalHeight) / originalWidth
+										);
+									} else {
+										newHeight = 2000;
+										newWidth = Math.round(
+											(2000 * originalWidth) / originalHeight
+										);
+									}
+								}
+								upscaleWithResize(newHeight, newWidth);
+							}
+							// ----------------------------------------------- //
+							else {
+								demoImage.setTransformation(
+									superResolution.upscale(formValues)
+								);
+							}
+							// ********************************************* //
+						}
+
+						if (formValues.type === "4x") {
+							// ********************************************* //
+							if (originalHeight > 1000 || originalWidth > 1000) {
+								let newHeight, newWidth;
+								// h > w
+								if (originalHeight > 1000 || originalWidth <= 1000) {
+									newHeight = 1000;
+									newWidth = Math.round(
+										(1000 * originalWidth) / originalHeight
+									);
+								}
+								// w > h
+								if (originalHeight <= 1000 || originalWidth > 1000) {
+									newWidth = 1000;
+									newHeight = Math.round(
+										(1000 * originalHeight) / originalWidth
+									);
+								}
+								// both greater than 1000
+								else {
+									if (originalHeight > originalWidth) {
+										newHeight = 1000;
+										newWidth = Math.round(
+											(1000 * originalWidth) / originalHeight
+										);
+									} else if (originalWidth > originalHeight) {
+										newWidth = 1000;
+										newHeight = newHeight = Math.round(
+											(1000 * originalHeight) / originalWidth
+										);
+									} else {
+										newHeight = 1000;
+										newWidth = Math.round(
+											(1000 * originalWidth) / originalHeight
+										);
+									}
+								}
+								upscaleWithResize(newHeight, newWidth);
+							}
+							// ----------------------------------------------- //
+							else {
+								demoImage.setTransformation(
+									superResolution.upscale(formValues)
+								);
+							}
+							// ********************************************* //
+						}
+
 						parent.postMessage(
 							{
 								pluginMessage: {
