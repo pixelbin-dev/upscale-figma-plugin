@@ -11,7 +11,7 @@ interface formProps {
 
 function DynamicForm({ setFormValues, formValues }: formProps) {
 	return (
-		<div>
+		<div className="form-container">
 			{localFormOptionsOptions.map((obj, index) => {
 				switch (obj.type) {
 					case "enum":

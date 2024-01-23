@@ -2107,7 +2107,7 @@ button {
 
 .dropdown-label {
 	margin-bottom: 4px;
-	font-size: 10px;
+	font-size: 10px !important;
 }
 .checkbox__label::before {
 	border: 1px solid white !important;
@@ -2204,13 +2204,12 @@ button {
 }
 
 .credit-details-container {
-	margin-top: 36px;
+	margin-top: 56px;
 	font-size: 12px;
 	display: flex;
 	margin-left: 6px;
 	flex-direction: column;
 	gap: 4px;
-	/* color: #9f9fa9; */
 }
 
 .token-input-container {
@@ -2294,11 +2293,11 @@ select {
 	min-height: 32px;
 	color: white;
 	width: 100%;
-	margin-bottom: 12px;
 	padding-left: 8px;
 	-webkit-appearance: none;
 	appearance: none;
 	color: var(--figma-color-bg-inverse);
+	font-size: 12px;
 }
 
 .token-input-box {
@@ -2330,5 +2329,11 @@ select {
 	justify-content: center;
 	align-items: center;
 	flex-grow: 1;
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 // *********************************** ------ ************************************** //
