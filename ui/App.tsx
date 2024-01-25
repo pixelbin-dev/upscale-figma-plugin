@@ -54,6 +54,13 @@ function App() {
 		);
 	}, []);
 
+	let defaultPixelBinClient: PixelbinClient = new PixelbinClient(
+		new PixelbinConfig({
+			domain: `${PIXELBIN_IO}`,
+			apiSecret: tokenValue,
+		})
+	);
+
 	function formSetter(data) {
 		let temp = { ...formValues };
 		localFormOptionsOptions.forEach((option, index) => {
@@ -86,13 +93,6 @@ function App() {
 		}
 
 		if (data.pluginMessage.type === SELCTED_IMAGE) {
-			const defaultPixelBinClient: PixelbinClient = new PixelbinClient(
-				new PixelbinConfig({
-					domain: `${PIXELBIN_IO}`,
-					apiSecret: `${data.pluginMessage.token}`,
-				})
-			);
-
 			let res = null;
 			let blob = new Blob([data.pluginMessage.imageBytes], {
 				type: "image/jpeg",
@@ -141,6 +141,10 @@ function App() {
 						const originalHeight = data.pluginMessage.imgHeight,
 							originalWidth = data.pluginMessage.imgWidth,
 							ratio = originalHeight / originalWidth;
+
+						// The below code snippet is written because when we apply upscaling and if resulted img have height or a width more that 4096px figma cannot handle it
+						// so here we are finding out predictions of result and applying resize to minimize the original img
+						// if we can predict result img will have height or width > 4000.
 
 						// ********************************************* //
 						if (
@@ -232,17 +236,10 @@ function App() {
 		setTokenErr(false);
 		setIsLoading(true);
 
-		const defaultPixelBinClient: PixelbinClient = new PixelbinClient(
-			new PixelbinConfig({
-				domain: `${PIXELBIN_IO}`,
-				apiSecret: tokenValue,
-			})
-		);
-
 		try {
 			const orgDetails =
 				await defaultPixelBinClient.organization.getAppOrgDetails();
-			console.log("orgDetails", orgDetails);
+			setOrgId(orgDetails?.app?.orgId);
 			parent.postMessage(
 				{
 					pluginMessage: {
@@ -288,16 +285,8 @@ function App() {
 
 	async function setCreditsDetails() {
 		if (tokenValue && tokenValue !== null) {
-			const defaultPixelBinClient: PixelbinClient = new PixelbinClient(
-				new PixelbinConfig({
-					domain: `${PIXELBIN_IO}`,
-					apiSecret: `${tokenValue}`,
-				})
-			);
-
 			try {
 				const newData = await defaultPixelBinClient.billing.getUsage();
-				console.log("DataData", newData);
 				const cu = newData.credits.used;
 				const cr = newData?.total?.credits;
 				setCreditUSed(cu);
