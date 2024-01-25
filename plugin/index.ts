@@ -111,12 +111,10 @@ figma.ui.onmessage = async (msg) => {
 				figma.clientStorage
 					.getAsync(SAVED_FORM_VALUE)
 					.then((value) => {
-						console.log("LAtestForm", value);
 						body.savedFormValue = value || localFormOptionsOptions;
 						figma.ui.postMessage(body);
 					})
 					.catch((err) => {
-						console.log("LAtestFormErr");
 						figma.ui.postMessage(body);
 					});
 			})
@@ -185,14 +183,9 @@ figma.ui.onmessage = async (msg) => {
 		figma.openExternal(msg.url);
 	}
 	if (msg.type === REPLACE_IMAGE) {
-		console.log("IMAge URl,", msg.transformedImageURl);
 		figma
 			.createImageAsync(msg?.transformedImageURl)
 			.then(async (image: any) => {
-				// console.log("Image Width", image.width, image.height);
-
-				// Resize the node based on the image dimensions
-
 				node.fills = [
 					{
 						type: IMAGE,
