@@ -45,7 +45,7 @@ function TokenUI({
 					<span
 						className="link"
 						onClick={() => {
-							handleLinkClick("https://console.pixelbin.io");
+							handleLinkClick(`${PIXELBIN_CONSOLE_SETTINGS}/apps`);
 						}}
 					>
 						&nbsp;console.pixelbin.io

@@ -12,11 +12,11 @@ import { Util } from "./../util.ts";
 import "./styles/style.scss";
 import Pixelbin, { transformations } from "@pixelbin/core";
 import { PIXELBIN_IO } from "../config";
-import CreditsUI from "./components/creditDetails";
+import CreditsUI from "./components/CreditsUI/index.tsx";
 import TokenUI from "./components/TokenUI";
-import DynamicForm from "./components/dynamicForm";
-import Loader from "./components/loader";
-import Footer from "./components/mainScreenFooter/index.tsx";
+import DynamicForm from "./components/DynamicForm/index.tsx";
+import Loader from "./components/Loader/index.tsx";
+import Footer from "./components/Footer/index.tsx";
 
 PdkAxios.defaults.withCredentials = false;
 
@@ -103,10 +103,6 @@ function App() {
 				zone: "default", // optional
 			});
 
-			const originalHeight = data.pluginMessage.imgHeight,
-				originalWidth = data.pluginMessage.imgWidth,
-				ratio = originalHeight / originalWidth;
-
 			const superResolution = transformations.SuperResolution;
 			const Basic = transformations.Basic;
 
@@ -141,101 +137,63 @@ function App() {
 							);
 						}
 
-						if (formValues.type === "2x") {
-							// ********************************************* //
-							if (originalHeight > 2000 || originalWidth > 2000) {
-								let newHeight, newWidth;
-								// h > w
-								if (originalHeight > 2000 || originalWidth <= 2000) {
-									newHeight = 2000;
-									newWidth = Math.round(
-										(2000 * originalWidth) / originalHeight
-									);
-								}
-								// w > h
-								if (originalHeight <= 2000 || originalWidth > 2000) {
-									newWidth = 2000;
-									newHeight = Math.round(
-										(2000 * originalHeight) / originalWidth
-									);
-								}
-								// both greater than 2000
-								else {
-									if (originalHeight > originalWidth) {
-										newHeight = 2000;
-										newWidth = Math.round(
-											(2000 * originalWidth) / originalHeight
-										);
-									} else if (originalWidth > originalHeight) {
-										newWidth = 2000;
-										newHeight = newHeight = Math.round(
-											(2000 * originalHeight) / originalWidth
-										);
-									} else {
-										newHeight = 2000;
-										newWidth = Math.round(
-											(2000 * originalWidth) / originalHeight
-										);
-									}
-								}
-								upscaleWithResize(newHeight, newWidth);
-							}
-							// ----------------------------------------------- //
-							else {
-								demoImage.setTransformation(
-									superResolution.upscale(formValues)
-								);
-							}
-							// ********************************************* //
-						}
+						let maxResolution = formValues.type === "2x" ? 2000 : 1000;
+						const originalHeight = data.pluginMessage.imgHeight,
+							originalWidth = data.pluginMessage.imgWidth,
+							ratio = originalHeight / originalWidth;
 
-						if (formValues.type === "4x") {
-							// ********************************************* //
-							if (originalHeight > 1000 || originalWidth > 1000) {
-								let newHeight, newWidth;
-								// h > w
-								if (originalHeight > 1000 || originalWidth <= 1000) {
-									newHeight = 1000;
-									newWidth = Math.round(
-										(1000 * originalWidth) / originalHeight
-									);
-								}
-								// w > h
-								if (originalHeight <= 1000 || originalWidth > 1000) {
-									newWidth = 1000;
-									newHeight = Math.round(
-										(1000 * originalHeight) / originalWidth
-									);
-								}
-								// both greater than 1000
-								else {
-									if (originalHeight > originalWidth) {
-										newHeight = 1000;
-										newWidth = Math.round(
-											(1000 * originalWidth) / originalHeight
-										);
-									} else if (originalWidth > originalHeight) {
-										newWidth = 1000;
-										newHeight = newHeight = Math.round(
-											(1000 * originalHeight) / originalWidth
-										);
-									} else {
-										newHeight = 1000;
-										newWidth = Math.round(
-											(1000 * originalWidth) / originalHeight
-										);
-									}
-								}
-								upscaleWithResize(newHeight, newWidth);
-							}
-							// ----------------------------------------------- //
-							else {
-								demoImage.setTransformation(
-									superResolution.upscale(formValues)
+						// ********************************************* //
+						if (
+							originalHeight > maxResolution ||
+							originalWidth > maxResolution
+						) {
+							let newHeight, newWidth;
+							// h > w
+							if (
+								originalHeight > maxResolution ||
+								originalWidth <= maxResolution
+							) {
+								newHeight = maxResolution;
+								newWidth = Math.round(
+									(maxResolution * originalWidth) / originalHeight
 								);
 							}
-							// ********************************************* //
+							// w > h
+							if (
+								originalHeight <= maxResolution ||
+								originalWidth > maxResolution
+							) {
+								newWidth = maxResolution;
+								newHeight = Math.round(
+									(maxResolution * originalHeight) / originalWidth
+								);
+							}
+							// both greater than maxResolution
+							else {
+								if (originalHeight > originalWidth) {
+									newHeight = maxResolution;
+									newWidth = Math.round(
+										(maxResolution * originalWidth) / originalHeight
+									);
+								} else if (originalWidth > originalHeight) {
+									newWidth = maxResolution;
+									newHeight = newHeight = Math.round(
+										(maxResolution * originalHeight) / originalWidth
+									);
+								} else {
+									newHeight = maxResolution;
+									newWidth = Math.round(
+										(maxResolution * originalWidth) / originalHeight
+									);
+								}
+							}
+							upscaleWithResize(newHeight, newWidth);
 						}
+						// ----------------------------------------------- //
+						else {
+							demoImage.setTransformation(superResolution.upscale(formValues));
+						}
+						// ********************************************* //
 
 						parent.postMessage(
 							{
