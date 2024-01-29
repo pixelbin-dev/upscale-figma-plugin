@@ -1,6 +1,6 @@
 {
 	"name": "Upscale.media",
-	"id": "1331590103611016438",
+	"id": "1333666656417619328",
 	"api": "1.0.0",
 	"editorType": ["figma"],
 	"main": "dist/plugin/index.js",
