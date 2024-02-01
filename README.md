@@ -1,40 +1,42 @@
-# Upscale.meida Plugin
+# Upscale.media Figma Plugin
 
-This plugin is dedicated to background removal process.
-Once open/hover the plugin you will see three options "Run","Set/Reset Token" and "How it works" those are mention in `manifest.json` as menu items.
+Figma Plugin for [Upscale.media](Upscale.media), it helps users remove watermark from images, present in Figma files.
+
+## Installation
+
+1. Open Figma and navigate to the 'Plugins' section.
+2. Search for 'Upscale.media', or visit this [link]() to access the plugin directly.
+3. Click 'Install', and the plugin will be added to your Figma account.
 
 ## Project Structure
 
-Two important folders are `plugin` and `ui`
-where in plugin `index.ts` is entry to the plugin and ui is append through showUI which is written inside `ui` folder thorugh `index.html` and it mainly contains `App.tsx`
+- **`manifest.json`**: The configuration file, it details the plugin's name, unique ID, API version, and interactive menu options for users. It also specifies allowed domains for network access, ensuring secure functionality.
 
-## List of Scripts
+- **`plugin`**: Contains the core functionality with `index.ts` as the entry point. This script initializes the plugin and orchestrates its operations.
 
-There are two sets of commands in `package.json`: one covers the plugin logic and the other is for the UI development. Run `plugin:dev` and `ui:dev` in parallel to track changes from both sides. To build the production code, execute `plugin:build` followed by `ui:build`.
-
-```json
-"scripts": {
-    "plugin:tsc":     "tsc -p plugin/tsconfig.json",
-    "plugin:esbuild": "node plugin/esbuild.mjs",
-    "plugin:dev":     "npm run plugin:esbuild -- watch",
-    "plugin:build":   "npm run plugin:tsc && npm run plugin:esbuild -- build",
-
-    "ui:tsc":         "tsc -p ui/tsconfig.json",
-    "ui:vite":        "vite --config ui/vite.config.ts",
-    "ui:dev":         "npm run ui:vite -- build --watch",
-    "ui:build":       "npm run ui:vite && npm run ui:tsc",
-    "create:build": "npm run plugin:build && npm run ui:build"
-
-}
-```
+- **`ui`**: Manages the user interface. The `index.html` file, integrated via the `showUI` function in the plugin folder, displays the UI. The primary UI component is in `App.tsx`, which outlines the interface layout and interactions.
 
 ## Development Process
 
-1. Clone this repository and install developer dependencies using `npm install -D` command.
-2. create a build for plugin and ui using `npm run create:build`
-3. And Plugin is ready to run
+**Clone Repository**:
+
+    git clone https://github.com/pixelbin-dev/upscale-figma-plugin.git
+
+**Install Dependencies**:
+
+    npm install -D
+
+**Build the Plugin**:
+
+    npm run create:build
+
+**Add to Figma**:
+
+- In Figma, navigate to 'Plugins' > 'Development' > 'New Plugin'.
+- Choose 'Link existing plugin' and select the `manifest.json` file from your plugin's build directory.
 
 ## References
 
 1. [Figma's introduction to plugin development](https://www.figma.com/plugin-docs/intro/)
-2. [UI] https://github.com/thomas-lowry/figma-plugin-ds?tab=readme-ov-file#checkbox
+2. [Figma Plugin's with UI guide](https://github.com/thomas-lowry/figma-plugin-ds?tab=readme-ov-file#checkbox)
+3. [Figma's default color pallete] https://www.figma.com/plugin-docs/css-variables

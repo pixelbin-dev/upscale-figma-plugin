@@ -11,7 +11,7 @@ import {
 import { Util } from "./../util.ts";
 import "./styles/style.scss";
 import Pixelbin, { transformations } from "@pixelbin/core";
-import { PIXELBIN_IO } from "../config";
+import { API_PIXELBIN_IO } from "../config";
 import CreditsUI from "./components/CreditsUI/index.tsx";
 import TokenUI from "./components/TokenUI";
 import DynamicForm from "./components/DynamicForm/index.tsx";
@@ -56,7 +56,7 @@ function App() {
 
 	let defaultPixelBinClient: PixelbinClient = new PixelbinClient(
 		new PixelbinConfig({
-			domain: `${PIXELBIN_IO}`,
+			domain: `${API_PIXELBIN_IO}`,
 			apiSecret: tokenValue,
 		})
 	);

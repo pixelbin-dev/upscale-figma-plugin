@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../styles/style.scss";
-import { PIXELBIN_CONSOLE_SETTINGS } from "../../../config";
 import { EVENTS, localFormOptionsOptions } from "../../../constants";
 import { Util } from "../../../util";
 
