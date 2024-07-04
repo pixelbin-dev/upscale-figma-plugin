@@ -15,7 +15,7 @@
 	},
 	"dependencies": {
 		"@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-		"@pixelbin/admin": "^4.0.2",
+		"@pixelbin/admin": "^4.0.3",
 		"@pixelbin/core": "^5.4.0",
 		"buffer": "^6.0.3",
 		"querystring": "^0.2.1",

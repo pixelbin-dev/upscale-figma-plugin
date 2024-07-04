@@ -57,6 +57,7 @@ export const CLOUD_NAME = "cloudName";
 export const ORG_ID = "organisationId";
 export const UTM_DETAILS =
 	"utm_source=figma&utm_medium=plugin&utm_campaign=upscalemedia";
+export const INTEGRATION_PLATFORM = "PixelbinUpscaleMedia/8 (Figma/116.1.3)";
 
 export const createSignedURlDetails = {
 	path: "__figma/ebg",
