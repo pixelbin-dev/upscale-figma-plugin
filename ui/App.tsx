@@ -58,6 +58,7 @@ function App() {
 		new PixelbinConfig({
 			domain: `${API_PIXELBIN_IO}`,
 			apiSecret: tokenValue,
+			integrationPlatform: Util.generateUserAgent(),
 		})
 	);
 
