@@ -1,6 +1,6 @@
 {
 	"name": "Upscale.media",
-	"version": "2.0.1",
+	"version": "8",
 	"description": "Figma Plugin Description",
 	"scripts": {
 		"plugin:tsc": "tsc -p plugin/tsconfig.json",
